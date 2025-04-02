@@ -15,12 +15,3 @@ export function getItem(key: string) {
   }
 }
 
-export function removeItem(key: string) {
-  try {
-    window.localStorage.removeItem(key);
-    window.location.reload();
-    console.log("élément supprimé");
-  } catch (error) {
-    console.log(error);
-  }
-}

@@ -1,4 +1,4 @@
-import { getItem, removeItem } from "../utils/localStorage";
+import { getItem, setItem } from "../utils/localStorage";
 import { useNavigate } from "react-router";
 import jobType from "../types/jobType";
 
@@ -8,15 +8,26 @@ const FavoriteJobs = () => {
   const navigate = useNavigate();
   const favorites = (getItem("favorites") as jobType[]) || [];
 
-  const handleRemoveFavorites = () => {
-    removeItem("favorites");
+  const handleRemoveFavorites = (job: jobType) => {
+    const favorites = getItem("favorites") || [];
+    const updateFavorites = favorites.filter((fav: jobType) => {
+      return fav.id !== job.id;
+    });
+    setItem("favorites", updateFavorites);
+    window.location.reload();
   };
 
   if (favorites.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8 text-center mt-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 text-center mt-8 flex flex-col">
         {" "}
         No likes for the moment
+        <button
+          onClick={() => navigate("/")}
+          className="font-semibold text-blue-600 cursor-pointer hover:underline"
+        >
+          Back
+        </button>
       </div>
     );
   }
@@ -39,7 +50,7 @@ const FavoriteJobs = () => {
               <span className="font-semibold">Location : </span>
               {job.location}
             </p>
-            <RxCross2 onClick={() => handleRemoveFavorites()} />
+            <RxCross2 onClick={() => handleRemoveFavorites(job)} />
           </div>
         ))}
       </div>
