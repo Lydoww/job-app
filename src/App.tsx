@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import jobType from "./types/jobType";
 import apiClient from "./services/apiClient";
 import JobFilter from "./components/JobFilter";
+import Pagination from "./components/Pagination";
 import { NavLink } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { setItem, getItem } from "./utils/localStorage";
@@ -9,6 +10,16 @@ import { setItem, getItem } from "./utils/localStorage";
 function App() {
   const [jobs, setJobs] = useState<jobType[]>([]);
   const [filteredJobs, setFilteredJobs] = useState<jobType[]>(jobs);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(10);
+
+  const handlePrevPage = (prevPage: number) => {
+    setPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = (nextPage: number) => {
+    setPage((nextPage) => nextPage + 1);
+  };
 
   useEffect(() => {
     apiClient
@@ -16,11 +27,12 @@ function App() {
       .then((response) => {
         setJobs(response.data);
         setFilteredJobs(response.data);
+        setTotalPages(totalPages);
       })
       .catch((error) =>
         console.error("Erreur lors du chargement des jobs :", error)
       );
-  }, []);
+  }, [page]);
 
   const handleAddFavorite = (job: jobType) => {
     const favorites = getItem("favorites") || [];
@@ -41,6 +53,12 @@ function App() {
         </button>
       </NavLink>
       <main>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={page}
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+        />
         <JobFilter jobs={jobs} setFilteredJobs={setFilteredJobs} />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredJobs.map((job) => (
