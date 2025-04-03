@@ -17,22 +17,17 @@ const FavoriteJobs = () => {
     window.location.reload();
   };
 
-  if (favorites.length === 0) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-8 text-center mt-8 flex flex-col">
-        {" "}
-        No likes for the moment
-        <button
-          onClick={() => navigate("/")}
-          className="font-semibold text-blue-600 cursor-pointer hover:underline"
-        >
-          Back
-        </button>
-      </div>
-    );
-  }
-
-  return (
+  return favorites.length === 0 ? (
+    <div className="max-w-7xl mx-auto px-4 py-8 text-center mt-8 flex flex-col">
+      No likes for the moment
+      <button
+        onClick={() => navigate("/")}
+        className="font-semibold text-blue-600 cursor-pointer hover:underline"
+      >
+        Back
+      </button>
+    </div>
+  ) : (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center my-5">Favorite Jobs</h1>
       <button

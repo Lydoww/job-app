@@ -12,17 +12,17 @@ const Pagination = ({
   handlePrevPage,
 }: Props) => {
   return (
-    <div className="">
-      <button
+    <div className="mb-5">
+      <button className="hover:underline cursor-pointer mr-2"
         onClick={() => handlePrevPage(currentPage)}
         disabled={currentPage === 1}
       >
         &larr;
       </button>
       <span>
-        Page {currentPage} of {totalPages}
+        {currentPage} / {totalPages}
       </span>
-      <button
+      <button className="hover:underline cursor-pointer ml-2"
         onClick={() => handleNextPage(currentPage)}
         disabled={currentPage === totalPages}
       >
