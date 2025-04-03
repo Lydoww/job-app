@@ -13,11 +13,11 @@ function App() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
 
-  const handlePrevPage = (prevPage: number) => {
+  const handlePrevPage = () => {
     setPage((prevPage) => prevPage - 1);
   };
 
-  const handleNextPage = (nextPage: number) => {
+  const handleNextPage = () => {
     setPage((nextPage) => nextPage + 1);
   };
 
@@ -61,7 +61,7 @@ function App() {
         />
         <JobFilter jobs={jobs} setFilteredJobs={setFilteredJobs} />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {filteredJobs.map((job) => (
+          {filteredJobs.slice(0, 8).map((job) => (
             <div key={job.id} className="border p-4 h-auto bg-white shadow-lg ">
               <h1 className="text-xl font-bold mb-4">{job.title}</h1>
               <p className="text-gray-700 mb-2">{job.description}</p>
